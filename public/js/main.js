@@ -59,6 +59,7 @@ function quantityChanged(event){
     }  
     updatetotal();
     saveCartItems();
+    updateCartIcon();
 }
 
 //Add Cart Function
@@ -71,6 +72,7 @@ function addCartClicked(event) {
     addProductToCart(title, price, productImg);
     updatetotal();
     saveCartItems();
+    updateCartIcon();
 }
 function addProductToCart(title, price, productImg){
     var cartShopBox = document.createElement("div");
@@ -107,6 +109,7 @@ function addProductToCart(title, price, productImg){
     .getElementsByClassName('cart-quantity')[0]
     .addEventListener('change', quantityChanged);
     saveCartItems();
+    updateCartIcon();
 
 
 
@@ -186,4 +189,19 @@ function loadCartItems () {
     if(cartTotal){
         document.getElementsByClassName('total-price')[0].innerText = "ksh" + cartTotal;
     }
+    updateCartIcon();
+}
+
+//Quantity in Cart Icon
+function updateCartIcon (){
+    var cartBoxes = document.getElementsByClassName('cart-box');
+    var quantity = 0;
+
+    for(var i=0; i < cartBoxes.length; i++){
+        var cartBox = cartBoxes[i];
+        var quantityElement = cartBox.getElementsByClassName('cart-quantity')[0];
+        quantity+= parseInt(quantityElement.value);
+    }
+    var cartIcon = document.querySelector("#cart-icon");
+    cartIcon.setAttribute("data-quantity", quantity);
 }
