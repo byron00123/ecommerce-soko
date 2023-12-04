@@ -125,10 +125,10 @@ function updatetotal(){
     var cartBoxes = cartContent.getElementsByClassName("cart-box");
     var total = 0;
     for (var i =0; i < cartBoxes.length; i++) {
-        var cartBox = cartBoxes[i]
+        var cartBox = cartBoxes[i];
         var priceElement = cartBox.getElementsByClassName('cart-price')[0];
         var quantityElement = cartBox.getElementsByClassName('cart-quantity')[0];
-        var price = parseFloat(priceElement.innerText.replace("ksh", ""));
+        var price = parseFloat(priceElement.innerText.replace("usd", ""));
         var quantity = quantityElement.value;
         total += price * quantity;
        
@@ -136,7 +136,7 @@ function updatetotal(){
     }
     //if price contain some cents
     total = Math.round(total * 100) / 100;
-    document.getElementsByClassName('total-price')[0].innerText = "ksh" + total;
+    document.getElementsByClassName('total-price')[0].innerText = "usd" + total;
     //save Total to LOcalStorqage
     localStorage.setItem("cartTotal", total);
 }
@@ -187,7 +187,7 @@ function loadCartItems () {
     }
     var cartTotal = localStorage.getItem('cartTotal');
     if(cartTotal){
-        document.getElementsByClassName('total-price')[0].innerText = "ksh" + cartTotal;
+        document.getElementsByClassName('total-price')[0].innerText = "usd" + cartTotal;
     }
     updateCartIcon();
 }
@@ -204,4 +204,13 @@ function updateCartIcon (){
     }
     var cartIcon = document.querySelector("#cart-icon");
     cartIcon.setAttribute("data-quantity", quantity);
+}
+
+//clear cart Items After successful payment
+function clearCart(){
+    var cartContent = document.getElementsByClassName('cart-content')[0];
+    cartContent.innerHTML = '';
+    updatetotal();
+    localStorage.removeItem("cartItems");
+
 }
