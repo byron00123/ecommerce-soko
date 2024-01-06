@@ -7,6 +7,10 @@ dotenv.config();
 
 
 //start server
+const express = require('express');
+const serverless = require('serverless-http');
+const router = express.Router();
+
 const app = express();
 
 
@@ -68,6 +72,5 @@ app.post('/stripe-checkout', async(req,res)  => {
     res.json(session.url);
 });
 
-app.listen(3000, ()  => {
-    console.log("listening on port 3000;");
-});
+app.use('/.netlify/functions/api', router);
+module.exports.handler = serverless(app);
